@@ -1,0 +1,21 @@
+{
+	"FileVersion" : 3,
+	
+	"FriendlyName" : "Swipe",
+	"Version" : 1,
+	"VersionName" : "1.0",
+	"CreatedBy" : "Get Set Games Inc.",
+	"CreatedByURL" : "http://getsetgames.com",
+	"EngineVersion" : "4.6.0",
+	"Description" : "Exposes swipe inputs as blueprintable events.",
+	"Category" : "Input",
+	"EnabledByDefault" : false,
+	
+	"Modules" :
+	[
+		{
+			"Name" : "Swipe",
+			"Type" : "Runtime"
+		}
+	]
+}
