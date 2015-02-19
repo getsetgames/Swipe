@@ -69,7 +69,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			break;
 	}
 	
-	bool bResult = UGameViewportClient::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, DeviceTimestamp, TouchpadIndex);
+	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, DeviceTimestamp, TouchpadIndex);
 
 	return bResult;
 }
