@@ -22,5 +22,6 @@ public:
 	
 private:
 	bool bSwiping;
+	bool bSwipeTriggered;
 	FVector2D SwipeStartLocation;
 };

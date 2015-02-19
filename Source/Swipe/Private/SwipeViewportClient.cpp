@@ -22,35 +22,48 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		case ETouchType::Began:
 		{
 			SwipeStartLocation = TouchLocation;
+			bSwiping = true;
+			bSwipeTriggered = false;
+			break;
+		}
+		case ETouchType::Moved:
+		{
+			if (bSwiping && bSwipeTriggered == false) {
+				FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
+				const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
+				float AbsX = FMath::Abs(TouchDelta.X);
+				float AbsY = FMath::Abs(TouchDelta.Y);
+				bool XMeetsThreshold = (AbsX >= SwipeSettings->MinSwipeDistance);
+				bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
+				
+				if (AbsX > AbsY && XMeetsThreshold) {
+					if (TouchDelta.X > 0) {
+						USwipeComponent::SwipeRightDelegate.Broadcast();
+						bSwipeTriggered = true;
+					}
+					else {
+						USwipeComponent::SwipeLeftDelegate.Broadcast();
+						bSwipeTriggered = true;
+					}
+				}
+				else if (YMeetsThreshold) {
+					if (TouchDelta.Y > 0) {
+						USwipeComponent::SwipeDownDelegate.Broadcast();
+						bSwipeTriggered = true;
+					}
+					else {
+						USwipeComponent::SwipeUpDelegate.Broadcast();
+						bSwipeTriggered = true;
+					}
+				}
+			}
+			
 			break;
 		}
 		case ETouchType::Ended:
 		{
-			FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
-			const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
-			float AbsX = FMath::Abs(TouchDelta.X);
-			float AbsY = FMath::Abs(TouchDelta.Y);
-			bool XMeetsThreshold = (AbsX >= SwipeSettings->MinSwipeDistance);
-			bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
-			
-			if (AbsX > AbsY && XMeetsThreshold) {
-				if (TouchDelta.X > 0) {
-					USwipeComponent::SwipeRightDelegate.Broadcast();
-				}
-				else {
-					USwipeComponent::SwipeLeftDelegate.Broadcast();
-				}
-			}
-			else if (YMeetsThreshold) {
-				if (TouchDelta.Y > 0) {
-					USwipeComponent::SwipeDownDelegate.Broadcast();
-				}
-				else {
-					USwipeComponent::SwipeUpDelegate.Broadcast();
-				}
-			}
-
-			break;
+			bSwiping = false;
+			bSwipeTriggered = false;
 		}
 		default:
 			break;
