@@ -5,7 +5,7 @@
 	"Version" : 1,
 	"VersionName" : "1.0",
 	"CreatedBy" : "Get Set Games Inc.",
-	"CreatedByURL" : "http://getsetgames.com",
+	"CreatedByURL" : "https://github.com/getsetgames/Swipe",
 	"EngineVersion" : "4.6.0",
 	"Description" : "Exposes swipe inputs as blueprintable events.",
 	"Category" : "Input",
