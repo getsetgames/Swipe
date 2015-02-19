@@ -22,14 +22,6 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		case ETouchType::Began:
 		{
 			SwipeStartLocation = TouchLocation;
-			
-			UE_LOG(LogSwipe, Log, TEXT("Swipe began: %f %f"), TouchLocation.X, TouchLocation.Y);
-			
-			break;
-		}
-		case ETouchType::Moved:
-		{
-			UE_LOG(LogSwipe, Log, TEXT("Swiping"));
 			break;
 		}
 		case ETouchType::Ended:
@@ -41,37 +33,23 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			bool XMeetsThreshold = (AbsX >= SwipeSettings->MinSwipeDistance);
 			bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
 			
-			FString SwipeDirection = TEXT("No Direction");
-			
 			if (AbsX > AbsY && XMeetsThreshold) {
-				// swipe is horizontal
 				if (TouchDelta.X > 0) {
-					// swipe is right
-					SwipeDirection = TEXT("Right");
 					USwipeComponent::SwipeRightDelegate.Broadcast();
 				}
 				else {
-					// swipe is left
-					SwipeDirection = TEXT("Left");
 					USwipeComponent::SwipeLeftDelegate.Broadcast();
 				}
 			}
 			else if (YMeetsThreshold) {
-				// swipe is vertical
 				if (TouchDelta.Y > 0) {
-					// swipe is down
-					SwipeDirection = TEXT("Down");
 					USwipeComponent::SwipeDownDelegate.Broadcast();
 				}
 				else {
-					// swipe is up
-					SwipeDirection = TEXT("Up");
 					USwipeComponent::SwipeUpDelegate.Broadcast();
 				}
 			}
-			
-			UE_LOG(LogSwipe, Log, TEXT("Swipe ended: %f %f, delta: %f %f, direction: %s"), TouchLocation.X, TouchLocation.Y, TouchDelta.X, TouchDelta.Y, *SwipeDirection);
-			
+
 			break;
 		}
 		default:
