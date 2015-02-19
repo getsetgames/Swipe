@@ -7,7 +7,7 @@
 	"CreatedBy" : "Get Set Games Inc.",
 	"CreatedByURL" : "https://github.com/getsetgames/Swipe",
 	"EngineVersion" : "4.6.0",
-	"Description" : "Exposes swipe inputs as blueprintable events.",
+	"Description" : "Exposes swipes on mobile devices as events in blueprint.",
 	"Category" : "Input",
 	"EnabledByDefault" : false,
 	
