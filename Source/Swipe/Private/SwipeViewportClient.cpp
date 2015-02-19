@@ -43,10 +43,12 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 				if (TouchDelta.X > 0) {
 					// swipe is right
 					SwipeDirection = TEXT("Right");
+					USwipeComponent::SwipeRightDelegate.Broadcast();
 				}
 				else {
 					// swipe is left
 					SwipeDirection = TEXT("Left");
+					USwipeComponent::SwipeLeftDelegate.Broadcast();
 				}
 			}
 			else {
@@ -54,10 +56,12 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 				if (TouchDelta.Y > 0) {
 					// swipe is down
 					SwipeDirection = TEXT("Down");
+					USwipeComponent::SwipeDownDelegate.Broadcast();
 				}
 				else {
 					// swipe is up
 					SwipeDirection = TEXT("Up");
+					USwipeComponent::SwipeUpDelegate.Broadcast();
 				}
 			}
 			
