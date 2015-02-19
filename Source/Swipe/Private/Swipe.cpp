@@ -4,8 +4,11 @@
 //
 
 #include "SwipePrivatePCH.h"
+#include "ISettingsModule.h"
 
 DEFINE_LOG_CATEGORY(LogSwipe);
+
+#define LOCTEXT_NAMESPACE "Swipe"
 
 class FSwipe : public ISwipe
 {
@@ -15,10 +18,17 @@ class FSwipe : public ISwipe
 
 IMPLEMENT_MODULE( FSwipe, Swipe )
 
-
-
 void FSwipe::StartupModule()
 {
+	// register settings
+	if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
+	{
+		SettingsModule->RegisterSettings("Project", "Plugins", "Swipe",
+										 LOCTEXT("RuntimeSettingsName", "Swipe"),
+										 LOCTEXT("RuntimeSettingsDescription", "Configure the Swipe plugin"),
+										 GetMutableDefault<USwipeSettings>()
+										 );
+	}
 }
 
 

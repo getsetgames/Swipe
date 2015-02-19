@@ -35,10 +35,15 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		case ETouchType::Ended:
 		{
 			FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
+			const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
+			float AbsX = FMath::Abs(TouchDelta.X);
+			float AbsY = FMath::Abs(TouchDelta.Y);
+			bool XMeetsThreshold = (AbsX >= SwipeSettings->MinSwipeDistance);
+			bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
 			
 			FString SwipeDirection = TEXT("No Direction");
 			
-			if (FMath::Abs(TouchDelta.X) > FMath::Abs(TouchDelta.Y)) {
+			if (AbsX > AbsY && XMeetsThreshold) {
 				// swipe is horizontal
 				if (TouchDelta.X > 0) {
 					// swipe is right
@@ -51,7 +56,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 					USwipeComponent::SwipeLeftDelegate.Broadcast();
 				}
 			}
-			else {
+			else if (YMeetsThreshold) {
 				// swipe is vertical
 				if (TouchDelta.Y > 0) {
 					// swipe is down
