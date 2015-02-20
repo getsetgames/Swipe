@@ -13,59 +13,61 @@ class USwipeComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	DECLARE_MULTICAST_DELEGATE(FSwipeDelegatePool);
+	DECLARE_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDelegate, FVector2D, FVector2D);
+	DECLARE_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDelegate, FVector2D, FVector2D, FVector2D);
 	
-	static FSwipeDelegatePool SwipeLeftDelegate;
-	static FSwipeDelegatePool SwipeLeftEndedDelegate;
+	static FSwipeTriggeredDelegate SwipeLeftDelegate;
+	static FSwipeEndedDelegate SwipeLeftEndedDelegate;
 	
-	static FSwipeDelegatePool SwipeRightDelegate;
-	static FSwipeDelegatePool SwipeRightEndedDelegate;
+	static FSwipeTriggeredDelegate SwipeRightDelegate;
+	static FSwipeEndedDelegate SwipeRightEndedDelegate;
 	
-	static FSwipeDelegatePool SwipeUpDelegate;
-	static FSwipeDelegatePool SwipeUpEndedDelegate;
+	static FSwipeTriggeredDelegate SwipeUpDelegate;
+	static FSwipeEndedDelegate SwipeUpEndedDelegate;
 	
-	static FSwipeDelegatePool SwipeDownDelegate;
-	static FSwipeDelegatePool SwipeDownEndedDelegate;
+	static FSwipeTriggeredDelegate SwipeDownDelegate;
+	static FSwipeEndedDelegate SwipeDownEndedDelegate;
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSwipeDelegate);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation, FVector2D, EndLocation);
 	
 	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeLeft;
-
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeLeftEnded;
-
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeRight;
-	
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeRightEnded;
-	
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeUp;
-	
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeUpEnded;
-	
-	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeDown;
+	FSwipeTriggeredDynDelegate SwipeLeft;
 
 	UPROPERTY(BlueprintAssignable)
-	FSwipeDelegate SwipeDownEnded;
+	FSwipeEndedDynDelegate SwipeLeftEnded;
+
+	UPROPERTY(BlueprintAssignable)
+	FSwipeTriggeredDynDelegate SwipeRight;
+	
+	UPROPERTY(BlueprintAssignable)
+	FSwipeEndedDynDelegate SwipeRightEnded;
+	
+	UPROPERTY(BlueprintAssignable)
+	FSwipeTriggeredDynDelegate SwipeUp;
+	
+	UPROPERTY(BlueprintAssignable)
+	FSwipeEndedDynDelegate SwipeUpEnded;
+	
+	UPROPERTY(BlueprintAssignable)
+	FSwipeTriggeredDynDelegate SwipeDown;
+
+	UPROPERTY(BlueprintAssignable)
+	FSwipeEndedDynDelegate SwipeDownEnded;
 	
 	void OnRegister() override;
 	void OnUnregister() override;
 	
 private:
-	void SwipeLeft_Handler() { SwipeLeft.Broadcast(); }
-	void SwipeLeftEnded_Handler() { SwipeLeftEnded.Broadcast(); }
+	void SwipeLeft_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeLeft.Broadcast(StartLocation, TriggerLocation); }
+	void SwipeLeftEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeLeftEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }
 
-	void SwipeRight_Handler() { SwipeRight.Broadcast(); }
-	void SwipeRightEnded_Handler() { SwipeRightEnded.Broadcast(); }
+	void SwipeRight_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeRight.Broadcast(StartLocation, TriggerLocation); }
+	void SwipeRightEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeRightEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }
 
-	void SwipeUp_Handler() { SwipeUp.Broadcast(); }
-	void SwipeUpEnded_Handler() { SwipeUpEnded.Broadcast(); }
+	void SwipeUp_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeUp.Broadcast(StartLocation, TriggerLocation); }
+	void SwipeUpEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeUpEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }
 
-	void SwipeDown_Handler() { SwipeDown.Broadcast(); }
-	void SwipeDownEnded_Handler() { SwipeDownEnded.Broadcast(); }
+	void SwipeDown_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeDown.Broadcast(StartLocation, TriggerLocation); }
+	void SwipeDownEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeDownEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }
 };

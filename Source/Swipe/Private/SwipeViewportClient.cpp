@@ -37,22 +37,24 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 				bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
 				
 				if (AbsX > AbsY && XMeetsThreshold) {
+					SwipeTriggerLocation = TouchLocation;
 					if (TouchDelta.X > 0) {
-						USwipeComponent::SwipeRightDelegate.Broadcast();
+						USwipeComponent::SwipeRightDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation);
 						SwipeDirection = Swipe::Direction::Right;
 					}
 					else {
-						USwipeComponent::SwipeLeftDelegate.Broadcast();
+						USwipeComponent::SwipeLeftDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation);
 						SwipeDirection = Swipe::Direction::Left;
 					}
 				}
 				else if (YMeetsThreshold) {
+					SwipeTriggerLocation = TouchLocation;
 					if (TouchDelta.Y > 0) {
-						USwipeComponent::SwipeDownDelegate.Broadcast();
+						USwipeComponent::SwipeDownDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation);
 						SwipeDirection = Swipe::Direction::Down;
 					}
 					else {
-						USwipeComponent::SwipeUpDelegate.Broadcast();
+						USwipeComponent::SwipeUpDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation);
 						SwipeDirection = Swipe::Direction::Up;
 					}
 				}
@@ -67,22 +69,22 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			switch (SwipeDirection) {
 				case Swipe::Direction::Right:
 				{
-					USwipeComponent::SwipeRightEndedDelegate.Broadcast();
+					USwipeComponent::SwipeRightEndedDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation, TouchLocation);
 					break;
 				}
 				case Swipe::Direction::Left:
 				{
-					USwipeComponent::SwipeLeftEndedDelegate.Broadcast();
+					USwipeComponent::SwipeLeftEndedDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation, TouchLocation);
 					break;
 				}
 				case Swipe::Direction::Down:
 				{
-					USwipeComponent::SwipeDownEndedDelegate.Broadcast();
+					USwipeComponent::SwipeDownEndedDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation, TouchLocation);
 					break;
 				}
 				case Swipe::Direction::Up:
 				{
-					USwipeComponent::SwipeUpEndedDelegate.Broadcast();
+					USwipeComponent::SwipeUpEndedDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation, TouchLocation);
 					break;
 				}
 				default:

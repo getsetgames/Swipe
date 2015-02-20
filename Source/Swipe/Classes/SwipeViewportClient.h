@@ -35,4 +35,5 @@ private:
 	bool bSwiping;
 	Swipe::Direction SwipeDirection;
 	FVector2D SwipeStartLocation;
+	FVector2D SwipeTriggerLocation;
 };

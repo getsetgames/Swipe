@@ -39,14 +39,14 @@ void USwipeComponent::OnUnregister()
 	USwipeComponent::SwipeDownEndedDelegate.RemoveAll(this);
 }
 
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeLeftDelegate;
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeLeftEndedDelegate;
+USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeLeftDelegate;
+USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeLeftEndedDelegate;
 
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeRightDelegate;
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeRightEndedDelegate;
+USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeRightDelegate;
+USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeRightEndedDelegate;
 
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeUpDelegate;
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeUpEndedDelegate;
+USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeUpDelegate;
+USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeUpEndedDelegate;
 
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeDownDelegate;
-USwipeComponent::FSwipeDelegatePool USwipeComponent::SwipeDownEndedDelegate;
+USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeDownDelegate;
+USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeDownEndedDelegate;
