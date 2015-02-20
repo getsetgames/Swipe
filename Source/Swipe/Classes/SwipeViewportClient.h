@@ -7,6 +7,17 @@
 
 #include "SwipeViewportClient.generated.h"
 
+UENUM(BlueprintType)
+namespace Swipe {
+	enum Direction {
+		None,
+		Left,
+		Right,
+		Up,
+		Down
+	};
+}
+
 UCLASS()
 class USwipeViewportClient : public UGameViewportClient {
 	GENERATED_BODY()
@@ -22,6 +33,6 @@ public:
 	
 private:
 	bool bSwiping;
-	bool bSwipeTriggered;
+	Swipe::Direction SwipeDirection;
 	FVector2D SwipeStartLocation;
 };

@@ -23,12 +23,12 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		{
 			SwipeStartLocation = TouchLocation;
 			bSwiping = true;
-			bSwipeTriggered = false;
+			SwipeDirection = Swipe::Direction::None;
 			break;
 		}
 		case ETouchType::Moved:
 		{
-			if (bSwiping && bSwipeTriggered == false) {
+			if (bSwiping && SwipeDirection == Swipe::Direction::None) {
 				FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
 				const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
 				float AbsX = FMath::Abs(TouchDelta.X);
@@ -39,21 +39,21 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 				if (AbsX > AbsY && XMeetsThreshold) {
 					if (TouchDelta.X > 0) {
 						USwipeComponent::SwipeRightDelegate.Broadcast();
-						bSwipeTriggered = true;
+						SwipeDirection = Swipe::Direction::Right;
 					}
 					else {
 						USwipeComponent::SwipeLeftDelegate.Broadcast();
-						bSwipeTriggered = true;
+						SwipeDirection = Swipe::Direction::Left;
 					}
 				}
 				else if (YMeetsThreshold) {
 					if (TouchDelta.Y > 0) {
 						USwipeComponent::SwipeDownDelegate.Broadcast();
-						bSwipeTriggered = true;
+						SwipeDirection = Swipe::Direction::Down;
 					}
 					else {
 						USwipeComponent::SwipeUpDelegate.Broadcast();
-						bSwipeTriggered = true;
+						SwipeDirection = Swipe::Direction::Up;
 					}
 				}
 			}
@@ -63,7 +63,33 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		case ETouchType::Ended:
 		{
 			bSwiping = false;
-			bSwipeTriggered = false;
+			
+			switch (SwipeDirection) {
+				case Swipe::Direction::Right:
+				{
+					USwipeComponent::SwipeRightEndedDelegate.Broadcast();
+					break;
+				}
+				case Swipe::Direction::Left:
+				{
+					USwipeComponent::SwipeLeftEndedDelegate.Broadcast();
+					break;
+				}
+				case Swipe::Direction::Down:
+				{
+					USwipeComponent::SwipeDownEndedDelegate.Broadcast();
+					break;
+				}
+				case Swipe::Direction::Up:
+				{
+					USwipeComponent::SwipeUpEndedDelegate.Broadcast();
+					break;
+				}
+				default:
+					break;
+			}
+			
+			SwipeDirection = Swipe::Direction::None;
 		}
 		default:
 			break;
