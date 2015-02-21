@@ -9,6 +9,10 @@ void USwipeComponent::OnRegister()
 {
 	Super::OnRegister();
 	
+	USwipeComponent::TouchBeganDelegate.AddUObject(this, &USwipeComponent::TouchBegan_Handler);
+	USwipeComponent::TouchMovedDelegate.AddUObject(this, &USwipeComponent::TouchMoved_Handler);
+	USwipeComponent::TouchEndedDelegate.AddUObject(this, &USwipeComponent::TouchEnded_Handler);
+
 	USwipeComponent::SwipeLeftDelegate.AddUObject(this, &USwipeComponent::SwipeLeft_Handler);
 	USwipeComponent::SwipeLeftEndedDelegate.AddUObject(this, &USwipeComponent::SwipeLeftEnded_Handler);
 	
@@ -26,6 +30,10 @@ void USwipeComponent::OnUnregister()
 {
 	Super::OnUnregister();
 
+	USwipeComponent::TouchBeganDelegate.RemoveAll(this);
+	USwipeComponent::TouchMovedDelegate.RemoveAll(this);
+	USwipeComponent::TouchEndedDelegate.RemoveAll(this);
+
 	USwipeComponent::SwipeLeftDelegate.RemoveAll(this);
 	USwipeComponent::SwipeLeftEndedDelegate.RemoveAll(this);
 
@@ -38,6 +46,10 @@ void USwipeComponent::OnUnregister()
 	USwipeComponent::SwipeDownDelegate.RemoveAll(this);
 	USwipeComponent::SwipeDownEndedDelegate.RemoveAll(this);
 }
+
+USwipeComponent::FTouchDelegate USwipeComponent::TouchBeganDelegate;
+USwipeComponent::FTouchDelegate USwipeComponent::TouchMovedDelegate;
+USwipeComponent::FTouchDelegate USwipeComponent::TouchEndedDelegate;
 
 USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeLeftDelegate;
 USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeLeftEndedDelegate;
