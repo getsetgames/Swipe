@@ -13,26 +13,6 @@ class USwipeComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	DECLARE_MULTICAST_DELEGATE_OneParam(FTouchDelegate, FVector2D);
-	DECLARE_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDelegate, FVector2D, FVector2D);
-	DECLARE_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDelegate, FVector2D, FVector2D, FVector2D);
-
-	static FTouchDelegate TouchBeganDelegate;
-	static FTouchDelegate TouchMovedDelegate;
-	static FTouchDelegate TouchEndedDelegate;
-
-	static FSwipeTriggeredDelegate SwipeLeftDelegate;
-	static FSwipeEndedDelegate SwipeLeftEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeRightDelegate;
-	static FSwipeEndedDelegate SwipeRightEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeUpDelegate;
-	static FSwipeEndedDelegate SwipeUpEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeDownDelegate;
-	static FSwipeEndedDelegate SwipeDownEndedDelegate;
-
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTouchDynDelegate, FVector2D, TouchLocation);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation, FVector2D, EndLocation);
