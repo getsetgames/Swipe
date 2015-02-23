@@ -13,24 +13,19 @@ class USwipeComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	DECLARE_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDelegate, FVector2D, FVector2D);
-	DECLARE_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDelegate, FVector2D, FVector2D, FVector2D);
-	
-	static FSwipeTriggeredDelegate SwipeLeftDelegate;
-	static FSwipeEndedDelegate SwipeLeftEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeRightDelegate;
-	static FSwipeEndedDelegate SwipeRightEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeUpDelegate;
-	static FSwipeEndedDelegate SwipeUpEndedDelegate;
-	
-	static FSwipeTriggeredDelegate SwipeDownDelegate;
-	static FSwipeEndedDelegate SwipeDownEndedDelegate;
-
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTouchDynDelegate, FVector2D, TouchLocation);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation, FVector2D, EndLocation);
 	
+	UPROPERTY(BlueprintAssignable)
+	FTouchDynDelegate TouchBegan;
+
+	UPROPERTY(BlueprintAssignable)
+	FTouchDynDelegate TouchMoved;
+
+	UPROPERTY(BlueprintAssignable)
+	FTouchDynDelegate TouchEnded;
+
 	UPROPERTY(BlueprintAssignable)
 	FSwipeTriggeredDynDelegate SwipeLeft;
 
@@ -59,6 +54,10 @@ public:
 	void OnUnregister() override;
 	
 private:
+	void TouchBegan_Handler(FVector2D TouchLocation) { TouchBegan.Broadcast(TouchLocation); }
+	void TouchMoved_Handler(FVector2D TouchLocation) { TouchMoved.Broadcast(TouchLocation); }
+	void TouchEnded_Handler(FVector2D TouchLocation) { TouchEnded.Broadcast(TouchLocation); }
+
 	void SwipeLeft_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeLeft.Broadcast(StartLocation, TriggerLocation); }
 	void SwipeLeftEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeLeftEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }
 

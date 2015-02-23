@@ -9,44 +9,40 @@ void USwipeComponent::OnRegister()
 {
 	Super::OnRegister();
 	
-	USwipeComponent::SwipeLeftDelegate.AddUObject(this, &USwipeComponent::SwipeLeft_Handler);
-	USwipeComponent::SwipeLeftEndedDelegate.AddUObject(this, &USwipeComponent::SwipeLeftEnded_Handler);
+	USwipeDelegates::TouchBeganDelegate.AddUObject(this, &USwipeComponent::TouchBegan_Handler);
+	USwipeDelegates::TouchMovedDelegate.AddUObject(this, &USwipeComponent::TouchMoved_Handler);
+	USwipeDelegates::TouchEndedDelegate.AddUObject(this, &USwipeComponent::TouchEnded_Handler);
+
+	USwipeDelegates::SwipeLeftDelegate.AddUObject(this, &USwipeComponent::SwipeLeft_Handler);
+	USwipeDelegates::SwipeLeftEndedDelegate.AddUObject(this, &USwipeComponent::SwipeLeftEnded_Handler);
 	
-	USwipeComponent::SwipeRightDelegate.AddUObject(this, &USwipeComponent::SwipeRight_Handler);
-	USwipeComponent::SwipeRightEndedDelegate.AddUObject(this, &USwipeComponent::SwipeRightEnded_Handler);
+	USwipeDelegates::SwipeRightDelegate.AddUObject(this, &USwipeComponent::SwipeRight_Handler);
+	USwipeDelegates::SwipeRightEndedDelegate.AddUObject(this, &USwipeComponent::SwipeRightEnded_Handler);
 	
-	USwipeComponent::SwipeUpDelegate.AddUObject(this, &USwipeComponent::SwipeUp_Handler);
-	USwipeComponent::SwipeUpEndedDelegate.AddUObject(this, &USwipeComponent::SwipeUpEnded_Handler);
+	USwipeDelegates::SwipeUpDelegate.AddUObject(this, &USwipeComponent::SwipeUp_Handler);
+	USwipeDelegates::SwipeUpEndedDelegate.AddUObject(this, &USwipeComponent::SwipeUpEnded_Handler);
 	
-	USwipeComponent::SwipeDownDelegate.AddUObject(this, &USwipeComponent::SwipeDown_Handler);
-	USwipeComponent::SwipeDownEndedDelegate.AddUObject(this, &USwipeComponent::SwipeDownEnded_Handler);
+	USwipeDelegates::SwipeDownDelegate.AddUObject(this, &USwipeComponent::SwipeDown_Handler);
+	USwipeDelegates::SwipeDownEndedDelegate.AddUObject(this, &USwipeComponent::SwipeDownEnded_Handler);
 }
 
 void USwipeComponent::OnUnregister()
 {
 	Super::OnUnregister();
 
-	USwipeComponent::SwipeLeftDelegate.RemoveAll(this);
-	USwipeComponent::SwipeLeftEndedDelegate.RemoveAll(this);
+	USwipeDelegates::TouchBeganDelegate.RemoveAll(this);
+	USwipeDelegates::TouchMovedDelegate.RemoveAll(this);
+	USwipeDelegates::TouchEndedDelegate.RemoveAll(this);
 
-	USwipeComponent::SwipeRightDelegate.RemoveAll(this);
-	USwipeComponent::SwipeRightEndedDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeLeftDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeLeftEndedDelegate.RemoveAll(this);
 
-	USwipeComponent::SwipeUpDelegate.RemoveAll(this);
-	USwipeComponent::SwipeUpEndedDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeRightDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeRightEndedDelegate.RemoveAll(this);
 
-	USwipeComponent::SwipeDownDelegate.RemoveAll(this);
-	USwipeComponent::SwipeDownEndedDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeUpDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeUpEndedDelegate.RemoveAll(this);
+
+	USwipeDelegates::SwipeDownDelegate.RemoveAll(this);
+	USwipeDelegates::SwipeDownEndedDelegate.RemoveAll(this);
 }
-
-USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeLeftDelegate;
-USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeLeftEndedDelegate;
-
-USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeRightDelegate;
-USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeRightEndedDelegate;
-
-USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeUpDelegate;
-USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeUpEndedDelegate;
-
-USwipeComponent::FSwipeTriggeredDelegate USwipeComponent::SwipeDownDelegate;
-USwipeComponent::FSwipeEndedDelegate USwipeComponent::SwipeDownEndedDelegate;
