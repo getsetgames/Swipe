@@ -1,6 +1,6 @@
 # Swipe
 
-A plugin for Unreal Engine 4 that exposes swipes on mobile devices as events in blueprints. This allows you to respond to swipes on a touchscreen as if they were buttons being pressed.
+A plugin for Unreal Engine 4 that exposes touches and swipes on mobile devices as events in blueprints. This allows you to respond to swipes on a touchscreen as if they were buttons being pressed.
 
 ## Setup
 
@@ -46,17 +46,18 @@ Add a component called Swipe to any Actor blueprint that you would like to recei
 
 ![AddTheComponent](Resources/AddTheComponent.png)
 
-### 5. Add Swipe Events to the Graph
+### 5. Add Events to the Graph
 
-With the component selected, you can add swipe events to the graph from it's detail pane.
+With the component selected, you can add touch and swipe events to the graph from it's detail pane.
 
 ![AddTheComponentEvents](Resources/AddTheComponentEvents.png)
 
 ### 6. Respond to the Events in the Graph
 
-Now that the swipe events are in the graph, you can respond to them like so:
+Now that the events are in the graph, you can respond to them like so:
 
-![ComponentEvents](Resources/ComponentEvents.png)
+![SwipeEvents](Resources/SwipeEvents.png)
+![TouchEvents](Resources/TouchEvents.png)
 
 ### 7. Adjust Swipe Sensitivity
 
