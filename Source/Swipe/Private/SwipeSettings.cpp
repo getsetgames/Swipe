@@ -7,6 +7,6 @@
 
 USwipeSettings::USwipeSettings(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
-, MinSwipeDistance(25.0f)
+, MinSwipeDistance(50.0f)
 {
 }
