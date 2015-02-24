@@ -13,7 +13,7 @@ class USwipeComponent : public UActorComponent
 	GENERATED_BODY()
 	
 public:
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTouchDynDelegate, FVector2D, TouchLocation);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTouchDynDelegate, FVector2D, TouchLocation, int32, Handle);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDynDelegate, FVector2D, StartLocation, FVector2D, TriggerLocation, FVector2D, EndLocation);
 	
@@ -54,9 +54,9 @@ public:
 	void OnUnregister() override;
 	
 private:
-	void TouchBegan_Handler(FVector2D TouchLocation) { TouchBegan.Broadcast(TouchLocation); }
-	void TouchMoved_Handler(FVector2D TouchLocation) { TouchMoved.Broadcast(TouchLocation); }
-	void TouchEnded_Handler(FVector2D TouchLocation) { TouchEnded.Broadcast(TouchLocation); }
+	void TouchBegan_Handler(FVector2D TouchLocation, int32 Handle) { TouchBegan.Broadcast(TouchLocation, Handle); }
+	void TouchMoved_Handler(FVector2D TouchLocation, int32 Handle) { TouchMoved.Broadcast(TouchLocation, Handle); }
+	void TouchEnded_Handler(FVector2D TouchLocation, int32 Handle) { TouchEnded.Broadcast(TouchLocation, Handle); }
 
 	void SwipeLeft_Handler(FVector2D StartLocation, FVector2D TriggerLocation) { SwipeLeft.Broadcast(StartLocation, TriggerLocation); }
 	void SwipeLeftEnded_Handler(FVector2D StartLocation, FVector2D TriggerLocation, FVector2D EndLocation) { SwipeLeftEnded.Broadcast(StartLocation, TriggerLocation, EndLocation); }

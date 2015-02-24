@@ -13,7 +13,7 @@ class USwipeDelegates : public UObject
 	GENERATED_BODY()
 	
 public:
-	DECLARE_MULTICAST_DELEGATE_OneParam(FTouchDelegate, FVector2D);
+	DECLARE_MULTICAST_DELEGATE_TwoParams(FTouchDelegate, FVector2D, int32);
 	DECLARE_MULTICAST_DELEGATE_TwoParams(FSwipeTriggeredDelegate, FVector2D, FVector2D);
 	DECLARE_MULTICAST_DELEGATE_ThreeParams(FSwipeEndedDelegate, FVector2D, FVector2D, FVector2D);
 	

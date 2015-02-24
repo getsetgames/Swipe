@@ -21,7 +21,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 	switch (Type) {
 		case ETouchType::Began:
 		{
-			USwipeDelegates::TouchBeganDelegate.Broadcast(TouchLocation);
+			USwipeDelegates::TouchBeganDelegate.Broadcast(TouchLocation, Handle);
 
 			SwipeStartLocation = TouchLocation;
 			bSwiping = true;
@@ -30,7 +30,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		}
 		case ETouchType::Moved:
 		{
-			USwipeDelegates::TouchMovedDelegate.Broadcast(TouchLocation);
+			USwipeDelegates::TouchMovedDelegate.Broadcast(TouchLocation, Handle);
 
 			if (bSwiping && SwipeDirection == Swipe::Direction::None) {
 				FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
@@ -68,7 +68,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 		}
 		case ETouchType::Ended:
 		{
-			USwipeDelegates::TouchEndedDelegate.Broadcast(TouchLocation);
+			USwipeDelegates::TouchEndedDelegate.Broadcast(TouchLocation, Handle);
 
 			bSwiping = false;
 			
