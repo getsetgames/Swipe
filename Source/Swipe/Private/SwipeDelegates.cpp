@@ -20,3 +20,6 @@ USwipeDelegates::FSwipeEndedDelegate USwipeDelegates::SwipeUpEndedDelegate;
 
 USwipeDelegates::FSwipeTriggeredDelegate USwipeDelegates::SwipeDownDelegate;
 USwipeDelegates::FSwipeEndedDelegate USwipeDelegates::SwipeDownEndedDelegate;
+
+USwipeDelegates::FTapDelegate USwipeDelegates::SingleTapDelegate;
+USwipeDelegates::FTapDelegate USwipeDelegates::DoubleTapDelegate;

@@ -14,12 +14,12 @@ public:
 
 	static inline ISwipe& Get()
 	{
-		return FModuleManager::LoadModuleChecked< ISwipe >( "Swipe" );
+		return FModuleManager::LoadModuleChecked< ISwipe >("Swipe");
 	}
 
 	static inline bool IsAvailable()
 	{
-		return FModuleManager::Get().IsModuleLoaded( "Swipe" );
+		return FModuleManager::Get().IsModuleLoaded("Swipe");
 	}
 };
 

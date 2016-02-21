@@ -6,7 +6,9 @@
 #include "SwipePrivatePCH.h"
 
 USwipeSettings::USwipeSettings(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
-, MinSwipeDistance(50.0f)
+	: Super(ObjectInitializer)
+	, MinSwipeDistance(50.0f)
+	, MaxTimeBetweenTaps(0.3f)
+	, EnableDPIScaling(true)
 {
 }
