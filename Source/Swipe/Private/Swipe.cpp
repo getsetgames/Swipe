@@ -16,7 +16,7 @@ class FSwipe : public ISwipe
 	virtual void ShutdownModule() override;
 };
 
-IMPLEMENT_MODULE( FSwipe, Swipe )
+IMPLEMENT_MODULE(FSwipe, Swipe)
 
 void FSwipe::StartupModule()
 {
@@ -24,10 +24,10 @@ void FSwipe::StartupModule()
 	if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
 	{
 		SettingsModule->RegisterSettings("Project", "Plugins", "Swipe",
-										 LOCTEXT("RuntimeSettingsName", "Swipe"),
-										 LOCTEXT("RuntimeSettingsDescription", "Configure the Swipe plugin"),
-										 GetMutableDefault<USwipeSettings>()
-										 );
+			LOCTEXT("RuntimeSettingsName", "Swipe"),
+			LOCTEXT("RuntimeSettingsDescription", "Configure the Swipe plugin"),
+			GetMutableDefault<USwipeSettings>()
+			);
 	}
 }
 

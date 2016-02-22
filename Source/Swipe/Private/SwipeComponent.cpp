@@ -8,22 +8,25 @@
 void USwipeComponent::OnRegister()
 {
 	Super::OnRegister();
-	
+
 	USwipeDelegates::TouchBeganDelegate.AddUObject(this, &USwipeComponent::TouchBegan_Handler);
 	USwipeDelegates::TouchMovedDelegate.AddUObject(this, &USwipeComponent::TouchMoved_Handler);
 	USwipeDelegates::TouchEndedDelegate.AddUObject(this, &USwipeComponent::TouchEnded_Handler);
 
 	USwipeDelegates::SwipeLeftDelegate.AddUObject(this, &USwipeComponent::SwipeLeft_Handler);
 	USwipeDelegates::SwipeLeftEndedDelegate.AddUObject(this, &USwipeComponent::SwipeLeftEnded_Handler);
-	
+
 	USwipeDelegates::SwipeRightDelegate.AddUObject(this, &USwipeComponent::SwipeRight_Handler);
 	USwipeDelegates::SwipeRightEndedDelegate.AddUObject(this, &USwipeComponent::SwipeRightEnded_Handler);
-	
+
 	USwipeDelegates::SwipeUpDelegate.AddUObject(this, &USwipeComponent::SwipeUp_Handler);
 	USwipeDelegates::SwipeUpEndedDelegate.AddUObject(this, &USwipeComponent::SwipeUpEnded_Handler);
-	
+
 	USwipeDelegates::SwipeDownDelegate.AddUObject(this, &USwipeComponent::SwipeDown_Handler);
 	USwipeDelegates::SwipeDownEndedDelegate.AddUObject(this, &USwipeComponent::SwipeDownEnded_Handler);
+
+	USwipeDelegates::SingleTapDelegate.AddUObject(this, &USwipeComponent::SingleTap_Handler);
+	USwipeDelegates::DoubleTapDelegate.AddUObject(this, &USwipeComponent::DoubleTap_Handler);
 }
 
 void USwipeComponent::OnUnregister()
@@ -45,4 +48,7 @@ void USwipeComponent::OnUnregister()
 
 	USwipeDelegates::SwipeDownDelegate.RemoveAll(this);
 	USwipeDelegates::SwipeDownEndedDelegate.RemoveAll(this);
+
+	USwipeDelegates::SingleTapDelegate.RemoveAll(this);
+	USwipeDelegates::DoubleTapDelegate.RemoveAll(this);
 }

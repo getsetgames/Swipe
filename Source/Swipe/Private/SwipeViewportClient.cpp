@@ -4,21 +4,25 @@
 //
 
 #include "SwipePrivatePCH.h"
+#include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
 
 bool USwipeViewportClient::InputTouch(FViewport* InViewport,
-									  int32 ControllerId,
-									  uint32 Handle,
-									  ETouchType::Type Type,
-									  const FVector2D& TouchLocation,
-									  FDateTime DeviceTimestamp,
-									  uint32 TouchpadIndex)
+	int32 ControllerId,
+	uint32 Handle,
+	ETouchType::Type Type,
+	const FVector2D& TouchLocation,
+	FDateTime DeviceTimestamp,
+	uint32 TouchpadIndex)
 {
 	if (IgnoreInput())
 	{
 		return false;
 	}
-	
-	switch (Type) {
+
+	const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
+
+	switch (Type) 
+	{
 		case ETouchType::Began:
 		{
 			USwipeDelegates::TouchBeganDelegate.Broadcast(TouchLocation, Handle);
@@ -26,20 +30,26 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			SwipeStartLocation = TouchLocation;
 			bSwiping = true;
 			SwipeDirection = Swipe::Direction::None;
+
 			break;
 		}
 		case ETouchType::Moved:
 		{
 			USwipeDelegates::TouchMovedDelegate.Broadcast(TouchLocation, Handle);
 
+			float MinSwipeDistance = SwipeSettings->MinSwipeDistance;
+			if (SwipeSettings->EnableDPIScaling)
+			{
+				MinSwipeDistance *= GetDPIScreenScale();
+			}
+
 			if (bSwiping && SwipeDirection == Swipe::Direction::None) {
 				FVector2D TouchDelta = TouchLocation - SwipeStartLocation;
-				const USwipeSettings* SwipeSettings = GetDefault<USwipeSettings>();
 				float AbsX = FMath::Abs(TouchDelta.X);
 				float AbsY = FMath::Abs(TouchDelta.Y);
-				bool XMeetsThreshold = (AbsX >= SwipeSettings->MinSwipeDistance);
-				bool YMeetsThreshold = (AbsY >= SwipeSettings->MinSwipeDistance);
-				
+				bool XMeetsThreshold = (AbsX >= MinSwipeDistance);
+				bool YMeetsThreshold = (AbsY >= MinSwipeDistance);
+
 				if (AbsX > AbsY && XMeetsThreshold) {
 					SwipeTriggerLocation = TouchLocation;
 					if (TouchDelta.X > 0) {
@@ -63,7 +73,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 					}
 				}
 			}
-			
+
 			break;
 		}
 		case ETouchType::Ended:
@@ -71,8 +81,9 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			USwipeDelegates::TouchEndedDelegate.Broadcast(TouchLocation, Handle);
 
 			bSwiping = false;
-			
-			switch (SwipeDirection) {
+
+			switch (SwipeDirection) 
+			{
 				case Swipe::Direction::Right:
 				{
 					USwipeDelegates::SwipeRightEndedDelegate.Broadcast(SwipeStartLocation, SwipeTriggerLocation, TouchLocation);
@@ -94,16 +105,55 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 					break;
 				}
 				default:
+					TapCount++;
+
+					if (TapCount == 1)
+					{
+						USwipeDelegates::SingleTapDelegate.Broadcast(TouchLocation);
+					}
+					else if(TapCount >= 2)
+					{
+						USwipeDelegates::DoubleTapDelegate.Broadcast(TouchLocation);
+					}
+
+					FTimerHandle TapHandler;
+					FTimerDelegate TapHandlerDelegate;
+					TapHandlerDelegate.BindUObject(this, &USwipeViewportClient::ResetTapHandler);
+					UWorld* World = GetWorld();
+					if (World)
+					{
+						World->GetTimerManager().SetTimer(TapHandler, TapHandlerDelegate, SwipeSettings->MaxTimeBetweenTaps, false);
+					}
+
 					break;
 			}
-			
+
 			SwipeDirection = Swipe::Direction::None;
 		}
 		default:
 			break;
 	}
-	
+
 	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, DeviceTimestamp, TouchpadIndex);
 
 	return bResult;
+}
+
+void USwipeViewportClient::ResetTapHandler()
+{
+	TapCount = 0;
+}
+
+float USwipeViewportClient::GetDPIScreenScale()
+{
+	if (GEngine->GameViewport)
+	{
+		const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+		const float ViewportScale = GetDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass())->GetDPIScaleBasedOnSize(FIntPoint(ViewportSize.X, ViewportSize.Y));
+		return ViewportScale;
+	}
+	else
+	{
+		return 1;
+	}
 }
