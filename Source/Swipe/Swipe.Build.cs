@@ -7,7 +7,7 @@ namespace UnrealBuildTool.Rules
 {
 	public class Swipe : ModuleRules
 	{
-		public Swipe(TargetInfo Target)
+		public Swipe(ReadOnlyTargetRules Target) : base (Target)
 		{
 			PublicIncludePaths.AddRange(
 				new string[] {
@@ -17,7 +17,6 @@ namespace UnrealBuildTool.Rules
 
 			PrivateIncludePaths.AddRange(
 				new string[] {
-					"Developer/Swipe/Private",
 					// ... add other private include paths required here ...
 				}
 				);

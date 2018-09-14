@@ -3,8 +3,9 @@
 //  Copyright (c) 2015 Get Set Games Inc. All rights reserved.
 //
 
+#include "ISettingsModule.h"
 #include "SwipeViewportClient.h"
-#include "SwipePrivatePCH.h"
+#include "SwipeSettings.h"
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
 
 bool USwipeViewportClient::InputTouch(FViewport* InViewport,
@@ -12,6 +13,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 	uint32 Handle,
 	ETouchType::Type Type,
 	const FVector2D& TouchLocation,
+	float Force,
 	FDateTime DeviceTimestamp,
 	uint32 TouchpadIndex)
 {
@@ -135,7 +137,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			break;
 	}
 
-	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, DeviceTimestamp, TouchpadIndex);
+	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, Force, DeviceTimestamp, TouchpadIndex);
 
 	return bResult;
 }

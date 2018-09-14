@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "UObject/Object.h"
+#include "Engine/GameViewportClient.h"
 #include "SwipeViewportClient.generated.h"
 
 UENUM(BlueprintType)
@@ -29,6 +29,7 @@ public:
 		uint32 Handle,
 		ETouchType::Type Type,
 		const FVector2D& TouchLocation,
+		float Force,
 		FDateTime DeviceTimestamp,
 		uint32 TouchpadIndex) override;
 

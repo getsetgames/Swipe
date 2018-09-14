@@ -3,8 +3,8 @@
 //  Copyright (c) 2015 Get Set Games Inc. All rights reserved.
 //
 
+#include "ISettingsModule.h"
 #include "SwipeDelegates.h"
-#include "SwipePrivatePCH.h"
 
 USwipeDelegates::FTouchDelegate USwipeDelegates::TouchBeganDelegate;
 USwipeDelegates::FTouchDelegate USwipeDelegates::TouchMovedDelegate;
