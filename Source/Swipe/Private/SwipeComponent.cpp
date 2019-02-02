@@ -3,8 +3,9 @@
 //  Copyright (c) 2015 Get Set Games Inc. All rights reserved.
 //
 
+#include "ISettingsModule.h"
 #include "SwipeComponent.h"
-#include "SwipePrivatePCH.h"
+#include "SwipeDelegates.h"
 
 void USwipeComponent::OnRegister()
 {

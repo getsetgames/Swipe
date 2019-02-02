@@ -3,10 +3,9 @@
 //  Copyright (c) 2015 Get Set Games Inc. All rights reserved.
 //
 
-#include "SwipePrivatePCH.h"
 #include "ISettingsModule.h"
-
-DEFINE_LOG_CATEGORY(LogSwipe);
+#include "ISwipe.h"
+#include "SwipeSettings.h"
 
 #define LOCTEXT_NAMESPACE "Swipe"
 
