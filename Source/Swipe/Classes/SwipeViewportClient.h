@@ -9,8 +9,10 @@
 #include "SwipeViewportClient.generated.h"
 
 UENUM(BlueprintType)
-namespace Swipe {
-	enum Direction {
+namespace Swipe
+{
+	enum Direction
+	{
 		None,
 		Left,
 		Right,
@@ -20,10 +22,12 @@ namespace Swipe {
 }
 
 UCLASS()
-class USwipeViewportClient : public UGameViewportClient {
+class USwipeViewportClient : public UGameViewportClient
+{
 	GENERATED_BODY()
 
 public:
+	USwipeViewportClient();
 	virtual bool InputTouch(FViewport* Viewport,
 		int32 ControllerId,
 		uint32 Handle,
@@ -39,6 +43,11 @@ private:
 	FVector2D SwipeStartLocation;
 	FVector2D SwipeTriggerLocation;
 	int32 TapCount = 0;
+	const class USwipeSettings* SwipeSettings;
+
+	void CallSwipeDelegates(const FVector2D & TouchLocation);
+	void DetermineTapAmount(const FVector2D & TouchLocation);
+	void CallSwipeEndedDelegates(const FVector2D & TouchLocation);
 
 	UFUNCTION()
 	void ResetTapHandler();
