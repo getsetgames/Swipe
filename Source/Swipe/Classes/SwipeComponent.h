@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "Components/ActorComponent.h"
 #include "SwipeComponent.generated.h"
 
 UCLASS(ClassGroup = Input, HideCategories = (Activation, "Components|Activation", Collision), meta = (BlueprintSpawnableComponent))

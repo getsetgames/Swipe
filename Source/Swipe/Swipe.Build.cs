@@ -7,7 +7,7 @@ namespace UnrealBuildTool.Rules
 {
 	public class Swipe : ModuleRules
 	{
-		public Swipe(TargetInfo Target)
+		public Swipe(ReadOnlyTargetRules Target) : base(Target)
 		{
 			PublicIncludePaths.AddRange(
 				new string[] {
