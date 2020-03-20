@@ -7,11 +7,13 @@
 #include "SwipePrivatePCH.h"
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
 
+
 bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 	int32 ControllerId,
 	uint32 Handle,
 	ETouchType::Type Type,
 	const FVector2D& TouchLocation,
+	float Force,
 	FDateTime DeviceTimestamp,
 	uint32 TouchpadIndex)
 {
@@ -120,7 +122,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 					FTimerHandle TapHandler;
 					FTimerDelegate TapHandlerDelegate;
 					TapHandlerDelegate.BindUObject(this, &USwipeViewportClient::ResetTapHandler);
-					UWorld* World = GetWorld();
+					World = GetWorld();
 					if (World)
 					{
 						World->GetTimerManager().SetTimer(TapHandler, TapHandlerDelegate, SwipeSettings->MaxTimeBetweenTaps, false);
@@ -135,7 +137,7 @@ bool USwipeViewportClient::InputTouch(FViewport* InViewport,
 			break;
 	}
 
-	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, DeviceTimestamp, TouchpadIndex);
+	bool bResult = Super::InputTouch(InViewport, ControllerId, Handle, Type, TouchLocation, false, DeviceTimestamp, TouchpadIndex);
 
 	return bResult;
 }
